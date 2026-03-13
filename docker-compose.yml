@@ -1,0 +1,69 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  registro-service:
+    build:
+      context: ./BACKEND/registro-service
+    env_file:
+      - BACKEND/registro-service/.env
+    depends_on:
+      - postgres
+
+  consulta-service:
+    build:
+      context: ./BACKEND/consulta-service
+    env_file:
+      - BACKEND/consulta-service/.env
+    depends_on:
+      - postgres
+
+  notificacion-service:
+    build:
+      context: ./BACKEND/notificacion-service
+    env_file:
+      - BACKEND/notificacion-service/.env
+    depends_on:
+      - postgres
+
+  profesor-service:
+    build:
+      context: ./BACKEND/profesor-service
+    env_file:
+      - BACKEND/profesor-service/.env
+    depends_on:
+      - postgres
+
+  gateway:
+    build:
+      context: ./GATEWAY
+    env_file:
+      - GATEWAY/.env
+    ports:
+      - '3000:3000'
+    depends_on:
+      - registro-service
+      - consulta-service
+      - notificacion-service
+      - profesor-service
+
+  frontend:
+    build:
+      context: ./FRONTEND
+    env_file:
+      - FRONTEND/.env
+    ports:
+      - '3005:3005'
+    depends_on:
+      - gateway
+
+volumes:
+  postgres_data:

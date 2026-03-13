@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Salones</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Registro en el Salón</h1>
+    <p>Informa qué clase se dicta y cuántos bloques se ocuparán.</p>
+  </header>
+  <main class="registro-page">
+    <form id="registro-form" class="panel">
+      <label>Profesor
+        <select id="profesor-select" required>
+          <option value="">Seleccione un profesor</option>
+        </select>
+      </label>
+      <label>Clase
+        <select id="clase-select" required>
+          <option value="">Seleccione la clase</option>
+        </select>
+      </label>
+      <label>Salón
+        <input type="text" id="salon-input" placeholder="Ej: Salón 101" required>
+      </label>
+      <label>Cantidad de bloques
+        <input type="number" id="bloques-input" min="1" max="4" value="1" required>
+      </label>
+      <button type="submit">Registrar uso</button>
+      <p id="registro-status" class="status"></p>
+    </form>
+    <a class="cta secondary" href="/">Volver al portal</a>
+  </main>
+  <script src="/config.js"></script>
+  <script src="/entrada/registro.js"></script>
+</body>
+</html>

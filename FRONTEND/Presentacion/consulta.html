@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta de Salones</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Consulta de disponibilidad</h1>
+    <p>Filtra por bloque para saber qué salones están ocupados o libres.</p>
+  </header>
+  <main class="consulta-page">
+    <div class="panel">
+      <label>Bloque
+        <select id="bloque-consulta">
+          <option value="">Cualquiera</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </label>
+      <button id="consulta-refresh">Actualizar tabla</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Salón</th>
+          <th>Estado</th>
+          <th>Profesor</th>
+          <th>Bloques</th>
+        </tr>
+      </thead>
+      <tbody id="salones-body"></tbody>
+    </table>
+    <a class="cta secondary" href="/">Volver al portal</a>
+  </main>
+  <script src="/config.js"></script>
+  <script src="/entrada/consulta.js"></script>
+</body>
+</html>
