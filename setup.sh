@@ -12,10 +12,10 @@ SERVICIOS=(
 
 for servicio in "${SERVICIOS[@]}"; do
   echo "Instalando dependencias en $servicio"
-  (cd "$servicio" && npm install)
+  (cd "$servicio" && npm ci)
 done
 
-echo "Construyendo imágenes con docker-compose"
+echo "Construyendo imï¿½genes con docker-compose"
 docker-compose build
 
 echo "Iniciando servicios"
