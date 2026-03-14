@@ -9,51 +9,82 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    networks:
+      - backend
 
   registro-service:
     build:
-      context: ./BACKEND/registro-service
+      context: .
+      dockerfile: BACKEND/registro-service/Dockerfile
     env_file:
       - BACKEND/registro-service/.env
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    networks:
+      - backend
 
   consulta-service:
     build:
-      context: ./BACKEND/consulta-service
+      context: .
+      dockerfile: BACKEND/consulta-service/Dockerfile
     env_file:
       - BACKEND/consulta-service/.env
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    networks:
+      - backend
 
   notificacion-service:
     build:
-      context: ./BACKEND/notificacion-service
+      context: .
+      dockerfile: BACKEND/notificacion-service/Dockerfile
     env_file:
       - BACKEND/notificacion-service/.env
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    networks:
+      - backend
 
   profesor-service:
     build:
-      context: ./BACKEND/profesor-service
+      context: .
+      dockerfile: BACKEND/profesor-service/Dockerfile
     env_file:
       - BACKEND/profesor-service/.env
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    networks:
+      - backend
 
   gateway:
     build:
-      context: ./GATEWAY
+      context: .
+      dockerfile: GATEWAY/Dockerfile
     env_file:
       - GATEWAY/.env
     ports:
       - '3000:3000'
     depends_on:
-      - registro-service
-      - consulta-service
-      - notificacion-service
-      - profesor-service
+      registro-service:
+        condition: service_started
+      consulta-service:
+        condition: service_started
+      notificacion-service:
+        condition: service_started
+      profesor-service:
+        condition: service_started
+    networks:
+      - backend
 
   frontend:
     build:
@@ -63,7 +94,14 @@ services:
     ports:
       - '3005:3005'
     depends_on:
-      - gateway
+      gateway:
+        condition: service_started
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
 
 volumes:
   postgres_data:
