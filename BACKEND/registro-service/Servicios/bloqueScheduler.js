@@ -1,9 +1,13 @@
 const registroRepository = require('../Persistencia/registroRepository');
+const { createLogger } = require('../../../lib/logger');
+
+const logger = createLogger('registro-service');
 
 const DEFAULT_BLOCK_MINUTES = 1;
 const DEFAULT_INTERVAL_MS = 10 * 1000;
 
 async function liberarBloquesExpirados(blockDurationMs) {
+  logger.info('Iniciando liberación de bloques expirados...');
   const registros = await registroRepository.listarRegistros();
   const now = Date.now();
 
@@ -32,6 +36,7 @@ async function liberarBloquesExpirados(blockDurationMs) {
     const bloquesRestantes = registro.bloques.slice(bloquesExpirados);
     await registroRepository.actualizarBloques(registro.id, bloquesRestantes);
   }
+  logger.info('Liberación de bloques finalizada ✅')
 }
 
 function iniciarLiberacionBloques() {
@@ -41,7 +46,7 @@ function iniciarLiberacionBloques() {
 
   setInterval(() => {
     liberarBloquesExpirados(blockDurationMs).catch((error) => {
-      console.error('Error liberando bloques:', error.message);
+      logger.error('Error liberando bloques:', error.message);
     });
   }, intervalMs);
 }
