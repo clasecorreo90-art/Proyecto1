@@ -20,7 +20,36 @@ async function bloquesOcupadosEnSalon(salon) {
   return result.rows[0]?.ocupados || 0;
 }
 
+async function listarRegistros() {
+  const result = await pool.query(
+    `SELECT id, bloques, registrado
+     FROM registros
+     ORDER BY registrado ASC`
+  );
+  return result.rows;
+}
+
+async function actualizarBloques(id, bloques) {
+  await pool.query(
+    `UPDATE registros
+     SET bloques = $2
+     WHERE id = $1`,
+    [id, bloques]
+  );
+}
+
+async function eliminarRegistro(id) {
+  await pool.query(
+    `DELETE FROM registros
+     WHERE id = $1`,
+    [id]
+  );
+}
+
 module.exports = {
   crearRegistro,
-  bloquesOcupadosEnSalon
+  bloquesOcupadosEnSalon,
+  listarRegistros,
+  actualizarBloques,
+  eliminarRegistro
 };
