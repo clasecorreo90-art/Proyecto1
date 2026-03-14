@@ -29,25 +29,25 @@ CREATE TABLE IF NOT EXISTS registros (
 
 INSERT INTO profesores (nombre, departamento)
 VALUES
-  ('Laura S?nchez', 'Matem?ticas'),
-  ('Tom?s Rivera', 'Ingenier?a'),
-  ('Valeria Paredes', 'F?sica');
+  ('Laura Sánchez', 'Matemáticas'),
+  ('Tomás Rivera', 'Ingeniería'),
+  ('Valeria Paredes', 'Física');
 
 INSERT INTO clases (nombre, profesor_id)
 VALUES
-  ('C?lculo II', 1),
-  ('C?lculo III', 1),
+  ('Cálculo II', 1),
+  ('Cálculo III', 1),
   ('Circuitos Digitales', 2),
   ('Redes de Datos', 2),
-  ('Mec?nica Cu?ntica', 3);
+  ('Mecánica Cuántica', 3);
 
 INSERT INTO horarios (profesor_id, clase, dia, bloques)
 VALUES
-  (1, 'C?lculo II', 'Lunes', ARRAY[1,2]),
-  (1, 'C?lculo III', 'Mi?rcoles', ARRAY[3,4]),
+  (1, 'Cálculo II', 'Lunes', ARRAY[1,2]),
+  (1, 'Cálculo III', 'Miércoles', ARRAY[3,4]),
   (2, 'Circuitos Digitales', 'Martes', ARRAY[1,2]),
   (2, 'Redes de Datos', 'Jueves', ARRAY[3,4]),
-  (3, 'Mec?nica Cu?ntica', 'Viernes', ARRAY[2,3]);
+  (3, 'Mecánica Cuántica', 'Viernes', ARRAY[2,3]);
 
 INSERT INTO registros (profesor_id, clase_id, salon, bloques)
 VALUES
