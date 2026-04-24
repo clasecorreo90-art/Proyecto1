@@ -21,8 +21,26 @@ async function listarProfesores() {
   return result.rows;
 }
 
+async function crearProfesor({ nombre, departamento }) {
+  const result = await pool.query(
+    'INSERT INTO profesores (nombre, departamento) VALUES ($1, $2) RETURNING id, nombre, departamento',
+    [nombre, departamento]
+  );
+  return result.rows[0];
+}
+
+async function crearMateria({ nombre, profesorId }) {
+  const result = await pool.query(
+    'INSERT INTO clases (nombre, profesor_id) VALUES ($1, $2) RETURNING id, nombre, profesor_id',
+    [nombre, profesorId]
+  );
+  return result.rows[0];
+}
+
 module.exports = {
   obtenerProfesor,
   obtenerClasesPorProfesor,
-  listarProfesores
+  listarProfesores,
+  crearProfesor,
+  crearMateria
 };

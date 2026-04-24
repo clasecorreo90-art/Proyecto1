@@ -1,7 +1,6 @@
 ﻿const API_BASE_URL = window.API_BASE_URL || 'http://localhost:3000';
 const profesorSelect = document.getElementById('profesor-select');
 const claseSelect = document.getElementById('clase-select');
-const salonSelect = document.getElementById('salon-select');
 const registroForm = document.getElementById('registro-form');
 const bloquesInput = document.getElementById('bloques-input');
 const registroStatus = document.getElementById('registro-status');
@@ -43,44 +42,14 @@ async function cargarClases(profesorId) {
   }
 }
 
-async function cargarSalones() {
-  try {
-    const response = await fetch(`${API_BASE_URL}/salones`);
-    if (!response.ok) throw new Error('No se pudo cargar la lista de salones');
-
-    const salones = await response.json();
-    salonSelect.innerHTML = '<option value="">Seleccione un salón</option>';
-
-    salones
-      .map((item) => item.salon)
-      .filter((salon, index, all) => salon && all.indexOf(salon) === index)
-      .sort((a, b) => a.localeCompare(b, 'es'))
-      .forEach((salon) => {
-        const option = document.createElement('option');
-        option.value = salon;
-        option.textContent = salon;
-        salonSelect.appendChild(option);
-      });
-  } catch (error) {
-    registroStatus.textContent = error.message;
-    registroStatus.style.color = '#d93025';
-  }
-}
-
 registroForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const data = {
     profesorId: Number(profesorSelect.value),
     claseId: Number(claseSelect.value),
-    salon: salonSelect.value,
+    salon: document.getElementById('salon-input').value,
     cantidadBloques: Number(bloquesInput.value)
   };
-
-  if (!data.salon) {
-    registroStatus.textContent = 'Seleccione un salón';
-    registroStatus.style.color = '#d93025';
-    return;
-  }
 
   try {
     const response = await fetch(`${API_BASE_URL}/registro`, {
@@ -111,4 +80,3 @@ profesorSelect.addEventListener('change', () => {
 });
 
 window.addEventListener('DOMContentLoaded', cargarProfesores);
-window.addEventListener('DOMContentLoaded', cargarSalones);

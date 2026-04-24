@@ -71,6 +71,17 @@ app.get('/profesores', async (req, res) => {
   }
 });
 
+app.post('/profesores', async (req, res) => {
+  try {
+    const response = await profesorClient.post('/profesores', req.body);
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    logger.error('Error proxying POST /profesores', { message: error.message, status: error.response?.status });
+    const status = error.response?.status || 500;
+    res.status(status).json({ error: error.response?.data?.error || error.message });
+  }
+});
+
 app.get('/profesor/:id', async (req, res) => {
   try {
     const response = await profesorClient.get(`/profesor/${req.params.id}`);
@@ -88,6 +99,17 @@ app.get('/profesor/:id/clases', async (req, res) => {
   } catch (error) {
     logger.error('Error proxying GET /profesor/:id/clases', { message: error.message, status: error.response?.status });
     res.status(error.response?.status || 500).json({ error: error.message });
+  }
+});
+
+app.post('/materias', async (req, res) => {
+  try {
+    const response = await profesorClient.post('/materias', req.body);
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    logger.error('Error proxying POST /materias', { message: error.message, status: error.response?.status });
+    const status = error.response?.status || 500;
+    res.status(status).json({ error: error.response?.data?.error || error.message });
   }
 });
 

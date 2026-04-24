@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión Académica</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Gestión Académica</h1>
+    <p>Da de alta profesores y materias para habilitarlos en el módulo de registro.</p>
+  </header>
+
+  <main class="registro-page">
+    <form id="profesor-form" class="panel">
+      <h2>Crear Profesor</h2>
+      <label>Nombre
+        <input type="text" id="profesor-nombre" placeholder="Ej: Ana Gómez" required>
+      </label>
+      <label>Departamento
+        <input type="text" id="profesor-departamento" placeholder="Ej: Matemáticas" required>
+      </label>
+      <button type="submit">Guardar profesor</button>
+      <p id="profesor-status" class="status"></p>
+    </form>
+
+    <form id="materia-form" class="panel">
+      <h2>Crear Materia</h2>
+      <label>Nombre de la materia
+        <input type="text" id="materia-nombre" placeholder="Ej: Algebra Lineal" required>
+      </label>
+      <label>Profesor asignado
+        <select id="materia-profesor" required>
+          <option value="">Seleccione un profesor</option>
+        </select>
+      </label>
+      <button type="submit">Guardar materia</button>
+      <p id="materia-status" class="status"></p>
+    </form>
+
+    <a class="cta secondary" href="/">Volver al portal</a>
+  </main>
+
+  <script src="/config.js"></script>
+  <script src="/entrada/admin.js"></script>
+</body>
+</html>
+

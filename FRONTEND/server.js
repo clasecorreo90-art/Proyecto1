@@ -15,6 +15,7 @@ app.get('/', (req, res) => sendHtml(res, 'index.html'));
 app.get('/registro.html', (req, res) => sendHtml(res, 'registro.html'));
 app.get('/consulta.html', (req, res) => sendHtml(res, 'consulta.html'));
 app.get('/notificaciones.html', (req, res) => sendHtml(res, 'notificaciones.html'));
+app.get('/gestion.html', (req, res) => sendHtml(res, 'gestion.html'));
 
 app.use('/entrada', express.static(path.join(__dirname, 'Entrada')));
 app.use(express.static(publicPath));

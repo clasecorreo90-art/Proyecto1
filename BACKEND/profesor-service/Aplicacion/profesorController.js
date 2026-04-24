@@ -19,12 +19,36 @@ async function obtenerClases(req, res) {
 }
 
 async function listar(req, res) {
-  const profesores = await profesorService.listarProfesores();
-  res.json(profesores);
+  try {
+    const profesores = await profesorService.listarProfesores();
+    res.json(profesores);
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
+}
+
+async function crearProfesor(req, res) {
+  try {
+    const profesor = await profesorService.crearProfesor(req.body || {});
+    res.status(201).json(profesor);
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
+}
+
+async function crearMateria(req, res) {
+  try {
+    const materia = await profesorService.crearMateria(req.body || {});
+    res.status(201).json(materia);
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
 }
 
 module.exports = {
   obtenerProfesor,
   obtenerClases,
-  listar
+  listar,
+  crearProfesor,
+  crearMateria
 };
