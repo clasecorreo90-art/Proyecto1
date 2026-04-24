@@ -24,6 +24,7 @@ app.use((req, res, next) => {
   next();
 });
 
+//ENRUTAMIENTOS
 const registroClient = axios.create({ baseURL: process.env.REGISTRO_SERVICE_URL });
 const consultaClient = axios.create({ baseURL: process.env.CONSULTA_SERVICE_URL });
 const notificacionClient = axios.create({ baseURL: process.env.NOTIFICACION_SERVICE_URL });
